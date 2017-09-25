@@ -27,10 +27,11 @@ base-url: api/
    [인증] 
 
 - base-url : user/
-  - `POST` ^$ : 회원가입
-  - `GET`  ^$ : 프로필 보기
-  - `PUT` ^$ : 수정
-  - `PATCH` ^$ : 부분 수정
+  - `POST` ^signup/$ : 회원가입
+  - `GET`  ^$ : 유저 리스트 보기
+  - `GET`  ^{id}/$ : 유저 프로필 보기
+  - `PUT` ^{id}/$ : 유저 프로필 수정
+  - `PATCH` ^{id}/$ : 유저 프로필 부분 수정
   - `POST` ^login/$ : 로그인
   - `POST` ^logout/$ : 로그아웃
 
