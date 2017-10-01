@@ -1,4 +1,4 @@
-# DRF 스터디: `Re.duce` 프로젝트
+#  DRF 스터디: `Re.duce` 프로젝트
 
 1. #### 서비스 기획
 
@@ -9,29 +9,31 @@
      1. 위치를 선택해서 보는 방법
      2. 현재 위치를 기반으로 notification을 받는 방법
      3. `TODO` 특정 가게를 팔로잉해서 notification을 받는 방법
-   - 공급자는 서비스에서 제공하는 인터페이스를 통해서 할인 메뉴를 설정할 수 있음
+   -  공급자는 서비스에서 제공하는 인터페이스를 통해서 할인 메뉴를 설정할 수 있음
    - 필요한 뷰는 다음과 같음
      - 처음 메뉴 등록
-     - 메뉴 수정
+     - 메뉴 수정`
      - 할인 대상 메뉴 설정
      - 주문 내역 및 notification
    - 결제는 앱 내에서 이루어짐. `아임포트` 를 사용하여 개발할 예정
 
 2. #### 개발 계획
 
-   - ##### [API] base-url: api/ 서브도메인으로 빼기 고려하기 및 버전 정보 포함할 것 인지.
-
-     ##### [유저] url : user/
+   - ##### [유저] url : user/
 
      - `POST` ^$ : 회원가입(손님, 사장님)
-     - `POST` ^login/$ : 로그인 
+     - `POST` ^login/$ : 로그인
      - `GET`  ^$ : 유저 프로필 보기
      - `PATCH` ^$ : 유저 프로필 수정
+
+   - ##### [API] base-url: api/ 서브도메인으로 빼기 고려하기 및 버전 정보 포함할 것 인지.
 
      ##### [손님-가게 정보] url : shops/
 
      - `GET` ^$?query_param=location : 가게 리스트
        - `GET` ^{shop_id}/$ : 가게 정보 받아오기
+       - `GET` ^{shop_id}/menus/$?query_param=is_sale : 할인 메뉴 리스트 받아오기
+         - `GET` ^{shop_id}/menus/{menu_id}/$ : 할인 메뉴 정보 받아오기
 
      ##### [손님-주문 정보] url : orders/
 
@@ -47,7 +49,8 @@
      - `POST` ^$ : 가게 등록
      - `PATCH` ^{shop_id}/$ : 가게 정보 수정
      - `POST` ^{shop_id}/menus/$ : 메뉴 등록
-     - `GET` ^{shop_id}/menus/{menu_id}/?query_param=is_sales$ : 메뉴(할인) 정보 보기
+     - `GET` ^{shop_id}/menus/?query_param=is_sale$ : 메뉴(할인) 리스트 보기
+       - `GET` ^{shop_id}/menus/{menu_id}/$: 메뉴(할인) 정보 보기
      - `PATCH` ^{shop_id}/menus/{menu_id}/$ : 메뉴(할인) 정보 수정
      - `DELETE` ^{shop_id}/menus/{menu_id}/$ : 메뉴 정보 삭제
 
@@ -72,6 +75,8 @@
    - 매출 정보
 
    - 주문 접수 확인,취소 
+
+   - 카테고리
 
 3. #### Reqs
 
