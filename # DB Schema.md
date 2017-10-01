@@ -12,8 +12,9 @@
 
 - Customer
 - Shop
+  - `owner` = `ForeignKey` `Owner`
   - `name` : `CharField` 
-  - `description` : `CharField` 
+  - `description` : `TextField` 
   - `business_number` : `CharField`
   - `contact_number` : `CharField`
   - `address` : `CharField`
@@ -27,10 +28,6 @@
   - `order` : `ForeignKey` `Order` 
   - `menu` : `ForeignKey` `SaleMenu` 
   - `quantity` : `IntegerField`
-- SaleMenu
-  - `menu` : `OneToOneField` `Menu`
-  - `sale_rate` : `IntegerField` 
-  - `sale_price` : `IntegerField` 
 - Menu
   - `shop` : `ForeignKey` `Shop`
   - `name` : `CharField` 
@@ -38,3 +35,6 @@
   - `description` : `TextField`
   - `photo` : `ImageField` 
   - `is_sale` : `BooleanField`  
+
+
+
