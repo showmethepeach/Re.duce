@@ -1,15 +1,19 @@
 from django.db import models
 from user.models import Customer, Owner
 
+
 class Shop(models.Model):
     # 가게 모델
     owner = models.ForeignKey(Owner) # 사장님 모델과 1:N 관계 설정
     name = models.CharField(max_length=64) # 가게 이름
     description = models.TextField(max_length=512) # 가게 정보
-    business_number = models.CharField(max_length=16) # 사업자 등록 번호
+    business_number = models.CharField(max_length=16, unique=True) # 사업자 등록 번호
     contact_number = models.CharField(max_length=16)# 가게 전화 번호
     address = models.CharField(max_length=64) # 가게 주소
     # photo = models.ImageField()
+
+    def __str__(self):
+        return self.name
 
 class Menu(models.Model):
     # 메뉴 모델
