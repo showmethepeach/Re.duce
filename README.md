@@ -86,3 +86,5 @@
    - pip install django
    - pip install djangorestframework
    - pip install drfdocs
+   - Pip install django-jet
+   - pip install google-api-python-client==1.4.1
