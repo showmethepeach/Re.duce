@@ -19,6 +19,8 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^user/', include('user.urls')),
     url(r'^owner/', include('owner.urls')),
+    url(r'^jet/', include('jet.urls', 'jet')),
+    url(r'^jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
     url(r'^admin/', admin.site.urls),
     url(r'^docs/', include('rest_framework_docs.urls')),
     url(r'^api-auth/', include('rest_framework.urls',namespace='rest_framework')),
