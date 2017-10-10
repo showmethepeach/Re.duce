@@ -6,7 +6,7 @@
 
    - ##### [유저] url : user/
 
-     - `POST` ^$ : 회원가입(손님, 사장님)
+     - `POST` ^signup/$ : 회원가입(손님, 사장님)
      - `POST` ^login/$ : 로그인
      - `GET`  ^$ : 유저 프로필 보기
      - `PATCH` ^$ : 유저 프로필 수정
@@ -31,8 +31,11 @@
 
      ##### [사장님-가게 정보] url : my-shops/
 
+     - `GET` ^$ : 가게 리스트 보기 
      - `POST` ^$ : 가게 등록
+     - `GET` ^{shop_id}/$ : 가게 정보 보기
      - `PATCH` ^{shop_id}/$ : 가게 정보 수정
+     - `DELETE` ^(shop_id)/$: 가게 삭제
      - `POST` ^{shop_id}/menus/$ : 메뉴 등록
      - `GET` ^{shop_id}/menus/?query_param=is_sale$ : 메뉴(할인) 리스트 보기
        - `GET` ^{shop_id}/menus/{menu_id}/$: 메뉴(할인) 정보 보기
@@ -43,6 +46,7 @@
 
      - `GET` ^$?query_param=shop_name : 주문 내역 리스트
        - `GET` ^{oredr_id}/$ : 주문 내역 확인
+     - <u>주문 현황 알림 기능: 공부를 하자</u>
 
       (2단계)
 
@@ -61,5 +65,7 @@
    - 주문 접수 확인,취소 
 
    - 카테고리
+
+   - 마일리지(포인트)
 
    ​
