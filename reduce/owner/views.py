@@ -1,11 +1,12 @@
 from django.shortcuts import get_object_or_404
-from rest_framework import generics, viewsets
+from rest_framework import generics, filters
 from rest_framework.permissions import IsAuthenticated
 from owner.models import Shop, Menu
 from owner.serializers import ShopSerializer, MenuSerializer
 from owner.permissions import IsOwner
 
-class ShopList(generics.ListCreateAPIView):
+class MyShopList(generics.ListCreateAPIView):
+    # 사장별 가게 리스트
     serializer_class = ShopSerializer
     permission_classes = (IsOwner, )
 
@@ -19,7 +20,8 @@ class ShopList(generics.ListCreateAPIView):
         shop_id = Shop.objects.filter(owner=owner).count() + 1 # 각 사장님별 가게들의 고유번호
         serializer.save(shop_id=shop_id, owner=owner)
 
-class ShopDetail(generics.RetrieveUpdateDestroyAPIView):
+class MyShopDetail(generics.RetrieveUpdateDestroyAPIView):
+    # 해당 가게의 정보
     serializer_class = ShopSerializer
     permission_classes = (IsOwner, )
     lookup_field = 'shop_id'
@@ -34,6 +36,9 @@ class ShopDetail(generics.RetrieveUpdateDestroyAPIView):
         return self.update(request, *args, **kwargs)
 
 class MenuList(generics.ListCreateAPIView):
+    # 각 가게의 메뉴 리스트
+    # ToDo: 해당 가게의 같은 메뉴 추가 안되게.
+
     serializer_class = MenuSerializer
     permission_classes = (IsOwner, )
 
@@ -56,6 +61,7 @@ class MenuList(generics.ListCreateAPIView):
         serializer.save(shop=shop)
 
 class MenuDetail(generics.RetrieveUpdateDestroyAPIView):
+    # 해당 메뉴의 정보
     serializer_class = MenuSerializer
     permission_classes = (IsOwner, )
     lookup_url_kwarg = 'menu_id'
@@ -70,8 +76,7 @@ class MenuDetail(generics.RetrieveUpdateDestroyAPIView):
     def get_queryset(self):
         # 해당 가게의 메뉴 리스트만 가져온다.
         shop = self.get_shop_insatnace()
-        is_sale = self.request.query_params.get('is_sale', False)
-        menu_list = Menu.objects.filter(shop=shop, is_sale=is_sale)
+        menu_list = Menu.objects.filter(shop=shop)
         return menu_list
 
     def partial_update(self, request, *args, **kwargs):
@@ -79,7 +84,7 @@ class MenuDetail(generics.RetrieveUpdateDestroyAPIView):
         return self.update(request, *args, **kwargs)
 
 
-shop_list = ShopList.as_view()
-shop_detail = ShopDetail.as_view()
+my_shop_list = MyShopList.as_view()
+my_shop_detail = MyShopDetail.as_view()
 menu_list = MenuList.as_view()
 menu_detail = MenuDetail.as_view()

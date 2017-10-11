@@ -2,7 +2,7 @@ from rest_framework import serializers
 from owner.models import Shop, Menu
 
 
-class ShopSerializer(serializers.ModelSerializer):
+class MyShopSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Shop

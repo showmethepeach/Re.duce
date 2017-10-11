@@ -14,7 +14,7 @@ class Shop(models.Model):
     # photo = models.ImageField()
 
     def __str__(self):
-        return '{}의 가게{}'.format(self.owner.name, self.name)
+        return '{}의 가게 {}'.format(self.owner.name, self.name)
 
 class Menu(models.Model):
     # 메뉴 모델
@@ -30,7 +30,7 @@ class Menu(models.Model):
     #     unique_together = (('shop', 'name', 'price'),)
 
     def __str__(self):
-        return '{}의 가게{}의 메뉴{}'.format(self.shop.owner, self.shop.name, self.name)
+        return '{}의 가게 {}의 메뉴 {}'.format(self.shop.owner, self.shop.name, self.name)
 
 class Order(models.Model):
     # 주문 확인 모델
