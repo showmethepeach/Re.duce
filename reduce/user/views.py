@@ -6,21 +6,21 @@ from user.serializers import UserSerializer
 from user.permissions import IsAuthenticatedOrWriteOnly
 
 class UserManager(mixins.CreateModelMixin, generics.RetrieveUpdateAPIView):
-    # UserDetailAPIView(GET, UPDATE, PUT)
+    # 유저 관리 View
 
-    permission_classes = (IsAuthenticatedOrWriteOnly, )
+    permission_classes = (IsAuthenticatedOrWriteOnly, ) # 회원가입은 누구나 가능하게 한다.
     serializer_class = UserSerializer
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
 
     def retrieve(self, request, *args, **kwargs):
-        # 유저 정보 보기(GET)
+        # 해당 요청 유저 정보 보기(GET)
         serializer = self.serializer_class(request.user)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def update(self, request, *args, **kwargs):
-        # 유저 정보 수정(UPDATE, PUT)
+        # 해당 요청 유저 정보 수정(UPDATE, PUT)
 
         serializer = self.serializer_class(
             request.user, data=request.data, partial=True

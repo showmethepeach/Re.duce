@@ -24,3 +24,4 @@
    - pip install drfdocs
    - Pip install django-jet
    - pip install google-api-python-client==1.4.1
+   - pip install django-filters
