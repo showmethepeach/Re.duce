@@ -5,6 +5,7 @@ from user.models import Customer, Owner
 class Shop(models.Model):
     # 가게 모델
     owner = models.ForeignKey(Owner) # 사장님 모델과 1:N 관계 설정
+    shop_id = models.IntegerField(default=0) # 각 사장님 마다 부여된 가게의 고유번호
     name = models.CharField(max_length=64) # 가게 이름
     description = models.TextField(max_length=512) # 가게 정보
     business_number = models.CharField(max_length=16, unique=True) # 사업자 등록 번호
@@ -13,7 +14,7 @@ class Shop(models.Model):
     # photo = models.ImageField()
 
     def __str__(self):
-        return self.name
+        return '{}의 가게{}'.format(self.owner.name, self.name)
 
 class Menu(models.Model):
     # 메뉴 모델
@@ -24,6 +25,12 @@ class Menu(models.Model):
     is_sale = models.BooleanField(default=False) # 메뉴 할인 여부
     sale_rate = models.IntegerField(default=100) # 메뉴 할인 비율
     # photo = models.ImageField()
+
+    # class META:
+    #     unique_together = (('shop', 'name', 'price'),)
+
+    def __str__(self):
+        return '{}의 가게{}의 메뉴{}'.format(self.shop.owner, self.shop.name, self.name)
 
 class Order(models.Model):
     # 주문 확인 모델

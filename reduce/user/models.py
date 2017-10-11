@@ -7,7 +7,7 @@ class Owner(models.Model):
     name = models.CharField(max_length=32) # 사장님 이름
 
     def __str__(self):
-        return self.name
+        return 'id: {}, 이름: {}'.format(self.user.username, self.name)
 
 class Customer(models.Model):
     # 손님 유저 모델
