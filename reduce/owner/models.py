@@ -26,8 +26,8 @@ class Menu(models.Model):
     sale_rate = models.IntegerField(default=100) # 메뉴 할인 비율
     # photo = models.ImageField()
 
-    # class META:
-    #     unique_together = (('shop', 'name', 'price'),)
+    class META:
+        unique_together = (('shop', 'name', 'price'),)
 
     def __str__(self):
         return '{}의 가게 {}의 메뉴 {}'.format(self.shop.owner, self.shop.name, self.name)

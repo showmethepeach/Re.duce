@@ -2,12 +2,12 @@ from django.shortcuts import get_object_or_404
 from rest_framework import generics, filters
 from rest_framework.permissions import IsAuthenticated
 from owner.models import Shop, Menu
-from owner.serializers import ShopSerializer, MenuSerializer
+from owner.serializers import MyShopSerializer, MenuSerializer
 from owner.permissions import IsOwner
 
 class MyShopList(generics.ListCreateAPIView):
     # 사장별 가게 리스트
-    serializer_class = ShopSerializer
+    serializer_class = MyShopSerializer
     permission_classes = (IsOwner, )
 
     def get_queryset(self):
@@ -22,7 +22,7 @@ class MyShopList(generics.ListCreateAPIView):
 
 class MyShopDetail(generics.RetrieveUpdateDestroyAPIView):
     # 해당 가게의 정보
-    serializer_class = ShopSerializer
+    serializer_class = MyShopSerializer
     permission_classes = (IsOwner, )
     lookup_field = 'shop_id'
 
