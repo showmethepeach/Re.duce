@@ -37,7 +37,6 @@ class MyShopDetail(generics.RetrieveUpdateDestroyAPIView):
 
 class MenuList(generics.ListCreateAPIView):
     # 각 가게의 메뉴 리스트
-    # ToDo: 해당 가게의 같은 메뉴 추가 안되게.
 
     serializer_class = MenuSerializer
     permission_classes = (IsOwner, )
