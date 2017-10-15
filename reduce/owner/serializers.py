@@ -1,5 +1,10 @@
 from rest_framework import serializers
 from owner.models import Shop, Menu
+from rest_framework.serializers import (
+    HyperlinkedIdentityField,
+    ModelSerializer,
+    SerializerMethodField
+    )
 
 
 class MyShopSerializer(serializers.ModelSerializer):
@@ -14,6 +19,18 @@ class MyShopSerializer(serializers.ModelSerializer):
             }
 
 
+class MyShopCreateUpdateSerializer(ModelSerializer):
+    class Meta:
+        model = Shop
+        fields = [
+            'id', 'shop_id', 'owner', 'name', 'description', 'business_number', 'contact_number', 'address'
+
+        ]
+
+#class MyShopDetailSerializer(ModelSerializer):
+
+
+
 class MenuSerializer(serializers.ModelSerializer):
     class Meta:
         model = Menu
@@ -22,3 +39,20 @@ class MenuSerializer(serializers.ModelSerializer):
             'id': {'read_only': True},
             'shop': {'read_only': True},
         }
+
+class MenuCreateUpdateSerializer(ModelSerializer):
+    class Meta:
+        model = Menu
+        fields = [
+            'id', 'shop', 'name', 'price', 'description', 'is_sale', 'sale_rate',
+
+        ]
+
+#class MenuDetailSerializer(ModelSerializer):
+
+
+
+
+
+
+

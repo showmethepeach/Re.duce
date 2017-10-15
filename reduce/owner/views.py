@@ -2,8 +2,26 @@ from django.shortcuts import get_object_or_404
 from rest_framework import generics, filters
 from rest_framework.permissions import IsAuthenticated
 from owner.models import Shop, Menu
-from owner.serializers import MyShopSerializer, MenuSerializer
+from owner.serializers import MyShopSerializer, MenuSerializer,MyShopCreateUpdateSerializer, MenuCreateUpdateSerializer
 from owner.permissions import IsOwner
+
+from rest_framework.permissions import (
+    AllowAny,
+    IsAuthenticated,
+    IsAdminUser,
+    IsAuthenticatedOrReadOnly,
+
+    )
+
+#제네릭 뷰를 이용하여 코드 길이를 줄임
+from rest_framework.generics import (
+    CreateAPIView,
+    DestroyAPIView,
+    ListAPIView,
+    UpdateAPIView,
+    RetrieveAPIView,
+    RetrieveUpdateAPIView
+    )
 
 class MyShopList(generics.ListCreateAPIView):
     # 사장별 가게 리스트
@@ -81,6 +99,68 @@ class MenuDetail(generics.RetrieveUpdateDestroyAPIView):
     def partial_update(self, request, *args, **kwargs):
         kwargs['partial'] = True
         return self.update(request, *args, **kwargs)
+
+#-----------------------------------------------------------------------------------------
+
+#MyShop 정보 생성
+class MyShopCreateAPIView(CreateAPIView):
+    queryset = Shop.objects.all()
+    serializer_class = MyShopCreateUpdateSerializer
+    #permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+#MyShop 정보 편집
+class MyShopUpdateAPIView(RetrieveUpdateAPIView):
+    queryset = Shop.objects.all()
+    serializer_class = MyShopCreateUpdateSerializer
+    lookup_field = 'slug'
+    permission_classes = [IsOwner] #사장이 자기 가게 정보만을 편집하게 함
+    #lookup_url_kwarg = "abc"
+    def perform_update(self, serializer):
+        serializer.save(user=self.request.user)
+        #email send_email
+
+#가게 정보 삭제를 원하는 경우
+class MyShopDeleteAPIView(DestroyAPIView):
+    queryset = Shop.objects.all()
+    serializer_class = MyShopDetailSerializer
+    lookup_field = 'slug'
+    permission_classes = [IsOwner] #사장이 자기 가게 정보만을 편집하게 함
+    #lookup_url_kwarg = ""
+
+#---------------------------------------------------------------------------------------
+
+#Menu 정보 생성
+class MenuCreateAPIView(CreateAPIView):
+    queryset = Menu.objects.all()
+    serializer_class = MenuCreateUpdateSerializer
+    #permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+#Menu 정보 편집
+class MenuUpdateAPIView(RetrieveUpdateAPIView):
+    queryset = Shop.objects.all()
+    serializer_class = MenuCreateUpdateSerializer
+    lookup_field = 'slug'
+    permission_classes = [IsOwner] #사장이 자기 메뉴 정보만을 편집하게 함
+    #lookup_url_kwarg = "abc"
+    def perform_update(self, serializer):
+        serializer.save(user=self.request.user)
+        #email send_email
+
+#Menu 정보 삭제를 원하는 경우
+class MenuDeleteAPIView(DestroyAPIView):
+    queryset = Shop.objects.all()
+    serializer_class = MenuDetailSerializer
+    lookup_field = 'slug'
+    permission_classes = [IsOwner] #사장이 자기 메뉴 정보만을 편집하게 함
+    #lookup_url_kwarg = ""
+
+
 
 
 my_shop_list = MyShopList.as_view()
