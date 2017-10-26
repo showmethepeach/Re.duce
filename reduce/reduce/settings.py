@@ -135,7 +135,7 @@ JWT_AUTH = {
     # 'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
 
     # 'JWT_AUTH_HEADER_PREFIX': 'JWT',
-    # 'JWT_AUTH_COOKIE': None,
+    # 'JWT_AUTH_COOKIE': 'token',
 
 }
 # Password validation
@@ -170,7 +170,10 @@ USE_L10N = True
 
 USE_TZ = True
 
+# CORS (Cross-Origin Resource Sharing) headers to responses settings
 CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ALLOW_CREDENTIALS = True
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
