@@ -19,15 +19,22 @@
        - `GET` ^{shop_id}/$ : 가게 정보 받아오기
        - `GET` ^{shop_id}/menus/$?query_param=is_sale : 할인 메뉴 리스트 받아오기
          - `GET` ^{shop_id}/menus/{menu_id}/$ : 할인 메뉴 정보 받아오기
+       - `POST` ^{shop_id}/reviews/$ : 리뷰 등록하기
+       - `GET` ^{shop_id}/reviews/$ : 리뷰 리스트 보기 
+         - `GET` ^{shop_id}/reviews/{review_id}/$ : 댓글 내용 보기
+         - `PUT` ^{shop_id}/reviews/{review_id}/$ : 댓글 내용 수정
+         - `DELETE` ^{shop_id}/reviews/{review_id}/$ : 댓글 내용 삭제
 
      ##### [손님-주문 정보] url : orders/
 
      - `POST` ^$ : 주문하기
      - `GET` ^$ : 주문 내역 리스트
        - `GET` ^{order_id}/$ : 주문 상세 내역
-     - `DELETE` ^{order_id}/$ : 주문 취소
+       - `DELETE` ^{order_id}/$ : 주문 취소
 
-   - ##### [사장님] base-url : owner/
+     ​
+
+     ##### [사장님] base-url : owner/
 
      ##### [사장님-가게 정보] url : my-shops/
 
@@ -41,6 +48,8 @@
        - `GET` ^{shop_id}/menus/{menu_id}/$: 메뉴(할인) 정보 보기
      - `PATCH` ^{shop_id}/menus/{menu_id}/$ : 메뉴(할인) 정보 수정
      - `DELETE` ^{shop_id}/menus/{menu_id}/$ : 메뉴 정보 삭제
+     - `GET` ^{shop_id}/reviews/$ : 리뷰 리스트 보기 
+       - `GET` ^{shop_id}/reviews/{review_id}/$ : 댓글 내용 보기
 
      ##### [사장님-주문 정보] url : orders/
 
