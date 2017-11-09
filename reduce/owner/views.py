@@ -4,6 +4,8 @@ from rest_framework.permissions import IsAuthenticated
 from owner.models import Shop, Menu
 from owner.serializers import MyShopSerializer, MenuSerializer
 from owner.permissions import IsOwner
+from api.models import Review
+from api.serializers import ReviewSerializer
 
 class MyShopList(generics.ListCreateAPIView):
     # 사장별 가게 리스트
@@ -82,8 +84,47 @@ class MenuDetail(generics.RetrieveUpdateDestroyAPIView):
         kwargs['partial'] = True
         return self.update(request, *args, **kwargs)
 
+class ReviewList(generics.ListAPIView):
+    # 각 가게의 리뷰 리스트
+
+    serializer_class = ReviewSerializer
+    permission_classes = (IsOwner, )
+
+    def get_shop_insatnace(self):
+        # 해당 유저의 해당 가게 인스턴스를 가져온다.
+        shop_id = self.kwargs.get('shop_id')
+        shop_owner = self.request.user.owner
+        shop = get_object_or_404(Shop, shop_id=shop_id, owner=shop_owner)
+        return shop
+
+    def get_queryset(self):
+        # 해당 가게의 메뉴 리스트만 가져온다.
+        shop = self.get_shop_insatnace()
+        review_list = Review.objects.filter(shop=shop)
+        return review_list
+
+class ReviewDetail(generics.RetrieveAPIView):
+    # 해당 메뉴의 정보
+    serializer_class = ReviewSerializer
+    permission_classes = (IsOwner, )
+    lookup_url_kwarg = 'review_id'
+
+    def get_shop_insatnace(self):
+        # 해당 유저의 해당 가게 인스턴스를 가져온다.
+        shop_id = self.kwargs.get('shop_id')
+        shop_owner = self.request.user.owner
+        shop = get_object_or_404(Shop, shop_id=shop_id, owner=shop_owner)
+        return shop
+
+    def get_queryset(self):
+        # 해당 가게의 메뉴 리스트만 가져온다.
+        shop = self.get_shop_insatnace()
+        review_list = Review.objects.filter(shop=shop)
+        return review_list
 
 my_shop_list = MyShopList.as_view()
 my_shop_detail = MyShopDetail.as_view()
 menu_list = MenuList.as_view()
 menu_detail = MenuDetail.as_view()
+review_list = ReviewList.as_view()
+review_detail = ReviewDetail.as_view()
