@@ -6,7 +6,7 @@ class MyShopSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Shop
-        fields = ('id', 'shop_id', 'owner', 'name', 'description', 'business_number', 'contact_number', 'address')
+        fields = ('id', 'shop_id', 'owner', 'name', 'description', 'business_number', 'contact_number', 'address', 'image')
         extra_kwargs = {
             'id': {'read_only': True},
             'owner': {'read_only': True},
@@ -17,7 +17,7 @@ class MyShopSerializer(serializers.ModelSerializer):
 class MenuSerializer(serializers.ModelSerializer):
     class Meta:
         model = Menu
-        fields = ('id', 'shop', 'name', 'price', 'description', 'is_sale', 'sale_rate', )
+        fields = ('id', 'shop', 'name', 'price', 'description', 'is_sale', 'sale_rate', 'image')
         extra_kwargs = {
             'id': {'read_only': True},
             'shop': {'read_only': True},
