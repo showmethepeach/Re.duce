@@ -11,7 +11,7 @@ class Shop(models.Model):
     business_number = models.CharField(max_length=16, unique=True) # 사업자 등록 번호
     contact_number = models.CharField(max_length=16)# 가게 전화 번호
     address = models.CharField(max_length=64) # 가게 주소
-    # photo = models.ImageField()
+    image = models.ImageField(upload_to='shops/%Y/%m/%d/', null=True, blank=True)
 
     def __str__(self):
         return '{}의 가게 {}'.format(self.owner.name, self.name)
@@ -24,7 +24,7 @@ class Menu(models.Model):
     description = models.TextField(max_length=256) # 메뉴 정보
     is_sale = models.BooleanField(default=False) # 메뉴 할인 여부
     sale_rate = models.IntegerField(default=100) # 메뉴 할인 비율
-    # photo = models.ImageField()
+    image = models.ImageField(upload_to='menus/%Y/%m/%d/', null=True, blank=True)
 
     class Meta:
         unique_together = (('shop', 'name'),)
