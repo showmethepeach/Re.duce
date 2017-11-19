@@ -21,4 +21,5 @@ class MenuSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'id': {'read_only': True},
             'shop': {'read_only': True},
+            'image': {'use_url': True},
         }
