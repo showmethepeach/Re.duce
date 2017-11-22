@@ -1,5 +1,5 @@
 from django.contrib import admin
-from owner.models import Shop, Menu
+from owner.models import Shop, Menu, Order, OrderSaleMenu
 
 @admin.register(Shop)
 class ShopAdmin(admin.ModelAdmin):
@@ -8,4 +8,15 @@ class ShopAdmin(admin.ModelAdmin):
 @admin.register(Menu)
 class MenuAdmin(admin.ModelAdmin):
     model = Menu
+
+class OrderSaleMenuInline(admin.StackedInline):
+    model = OrderSaleMenu
+
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    model = Order
+    inlines = [
+        OrderSaleMenuInline,
+    ]
+
 

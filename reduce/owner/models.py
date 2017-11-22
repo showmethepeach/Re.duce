@@ -37,12 +37,13 @@ class Order(models.Model):
     # 주문 번호 필드 추가 할 것인가!!? 어떻게 번호 생성할 것인가
     customer = models.ForeignKey(Customer) # 손님 모델과 1:N 관계 설정
     shop = models.ForeignKey(Shop) # 가게 모델과 1:N 관계 설정
-    total_price = models.ImageField(default=0) # 주문 총 가격
+    is_finished = models.BooleanField(default=False)
+    total_price = models.IntegerField(default=0) # 주문 총 가격
     ordered_at = models.DateTimeField(auto_now_add=True) # 주문 일자
 
 class OrderSaleMenu(models.Model):
     # 주문 메뉴 상세 모델
-    order = models.ForeignKey(Order) # 주문 모델과 1:N 관계 설정
+    order = models.ForeignKey(Order, related_name='order_sale_menus') # 주문 모델과 1:N 관계 설정
     menu = models.ForeignKey(Menu) # 메뉴 모델과 1:N 관계 설정
-    quantity = models.IntegerField(default=0) # 메뉴 주문 개수
+    quantity = models.IntegerField(default=1) # 메뉴 주문 개수
 
