@@ -141,7 +141,7 @@ class OrderList(generics.ListAPIView):
         return order_list
 
 
-class OrderDetail(generics.RetrieveDestroyAPIView):
+class OrderDetail(generics.RetrieveUpdateDestroyAPIView):
     # 해당 주문의 메뉴정보
     serializer_class = OrderSerializer
     permission_classes = (IsOwner, )
@@ -160,6 +160,9 @@ class OrderDetail(generics.RetrieveDestroyAPIView):
         order_list = Order.objects.filter(shop=shop)
         return order_list
 
+    def partial_update(self, request, *args, **kwargs):
+        kwargs['partial'] = True
+        return self.update(request, *args, **kwargs)
 
 my_shop_list = MyShopList.as_view()
 my_shop_detail = MyShopDetail.as_view()
