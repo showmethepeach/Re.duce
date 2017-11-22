@@ -24,13 +24,10 @@
          - `GET` ^{shop_id}/reviews/{review_id}/$ : 댓글 내용 보기
          - `PUT` ^{shop_id}/reviews/{review_id}/$ : 댓글 내용 수정
          - `DELETE` ^{shop_id}/reviews/{review_id}/$ : 댓글 내용 삭제
-
-     ##### [손님-주문 정보] url : orders/
-
-     - `POST` ^$ : 주문하기
-     - `GET` ^$ : 주문 내역 리스트
-       - `GET` ^{order_id}/$ : 주문 상세 내역
-       - `DELETE` ^{order_id}/$ : 주문 취소
+       - `POST` ^{shop_id}/orders/$ : 주문하기
+       - `GET` ^{shop_id}/orders/$ : 주문 내역 리스트
+         - `GET` ^{shop_id}/orders/{order_id}/$ : 주문 상세 내역
+         - `DELETE` ^{shop_id}/orders/{order_id}/$ : 주문 취소
 
      ​
 
@@ -53,7 +50,7 @@
 
      ##### [사장님-주문 정보] url : orders/
 
-     - `GET` ^$?query_param=shop_name : 주문 내역 리스트
+     - `GET` ^$ : 주문 내역 리스트
        - `GET` ^{oredr_id}/$ : 주문 내역 확인
      - <u>주문 현황 알림 기능: 공부를 하자</u>
 
