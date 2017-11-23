@@ -20,7 +20,7 @@ class Customer(models.Model):
     def __str__(self):
         try:
             # customer따로 생성 시 user model과 연결이 안되어 있어 ObjectDoesNotExist에러 발생
-            return self.user.username
+            return '{}의 {}'.format(self.user.username, self.user.phone_number)
         except ObjectDoesNotExist:
             return 'Customer'
 
