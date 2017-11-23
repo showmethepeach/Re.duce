@@ -6,7 +6,7 @@ class MyShopSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Shop
-        fields = ('id', 'shop_id', 'owner', 'name', 'description', 'business_number', 'contact_number', 'address', 'image')
+        fields = ('id', 'shop_id', 'owner', 'name', 'description', 'business_number', 'contact_number', 'rating', 'address', 'image')
         extra_kwargs = {
             'id': {'read_only': True},
             'owner': {'read_only': True},
@@ -30,14 +30,22 @@ class OrderSaleMenuSerializer(serializers.ModelSerializer):
         model = OrderSaleMenu
         fields = ('menu', 'quantity', )
 
+    def to_representation(self, value):
+        data = MenuSerializer(value.menu).data
+        data['quantity'] = value.quantity
+        return data
+
 class OrderSerializer(serializers.ModelSerializer):
     order_sale_menus = OrderSaleMenuSerializer(many=True)
+    customer = serializers.StringRelatedField(read_only=True)
 
     class Meta:
         model = Order
-        fields = ('customer', 'shop', 'is_finished', 'total_price', 'ordered_at', 'order_sale_menus')
+        fields = ('customer', 'is_finished', 'total_price', 'ordered_at', 'order_sale_menus')
         extra_kwargs = {
-            'ordered_at': {'read_only': True},
-            'customer': {'read_only': True},
+            'ordered_at': {
+                'read_only': True,
+                'format': "%Y-%m-%d %H:%M",
+            },
             'shop': {'read_only': True},
         }
