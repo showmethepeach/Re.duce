@@ -2,13 +2,14 @@ from django.db import transaction
 from rest_framework import serializers
 from owner.models import Shop, Menu, Order, OrderSaleMenu
 from api.models import Review
+import json
 
 # Todo 모든 시리얼라이저 필요없는 필드 지우기
 class ShopSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Shop
-        fields = ('id', 'name', 'description', 'contact_number', 'address', 'image')
+        fields = ('id', 'name', 'description', 'contact_number', 'rating', 'address', 'image')
 
 class MenuSerializer(serializers.ModelSerializer):
 
@@ -36,16 +37,22 @@ class OrderSaleMenuSerializer(serializers.ModelSerializer):
         model = OrderSaleMenu
         fields = ('menu', 'quantity', )
 
+    def to_representation(self, value):
+        data = MenuSerializer(value.menu).data
+        data['quantity'] = value.quantity
+        return data
+
 class OrderSerializer(serializers.ModelSerializer):
     order_sale_menus = OrderSaleMenuSerializer(many=True)
 
     class Meta:
         model = Order
-        fields = ('customer', 'shop', 'is_finished', 'total_price', 'ordered_at', 'order_sale_menus')
+        fields = ('id', 'total_price', 'ordered_at', 'order_sale_menus')
         extra_kwargs = {
-            'ordered_at': {'read_only': True},
-            'customer': {'read_only': True},
-            'shop': {'read_only': True},
+            'ordered_at': {
+                'read_only': True,
+                'format': "%Y-%m-%d %H:%M"
+            },
         }
 
     def create(self, validated_data):

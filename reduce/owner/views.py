@@ -1,11 +1,11 @@
 from django.shortcuts import get_object_or_404
-from rest_framework import generics, filters
+from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from owner.models import Shop, Menu, Order
-from owner.serializers import MyShopSerializer, MenuSerializer
+from owner.serializers import MyShopSerializer, MenuSerializer, OrderSerializer
 from owner.permissions import IsOwner
 from api.models import Review
-from api.serializers import ReviewSerializer, OrderSerializer
+from api.serializers import ReviewSerializer
 
 class MyShopList(generics.ListCreateAPIView):
     # 사장별 가게 리스트
@@ -126,6 +126,7 @@ class OrderList(generics.ListAPIView):
 
     serializer_class = OrderSerializer
     permission_classes = (IsOwner, )
+    filter_fields = ('is_finished',)
 
     def get_shop_insatnace(self):
         # 해당 유저의 해당 가게 인스턴스를 가져온다.

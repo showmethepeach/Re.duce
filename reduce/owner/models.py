@@ -1,6 +1,6 @@
 from django.db import models
+from django.db.models import Avg
 from user.models import Customer, Owner
-
 
 class Shop(models.Model):
     # 가게 모델
@@ -11,10 +11,17 @@ class Shop(models.Model):
     business_number = models.CharField(max_length=16, unique=True) # 사업자 등록 번호
     contact_number = models.CharField(max_length=16)# 가게 전화 번호
     address = models.CharField(max_length=64) # 가게 주소
+    rating = models.DecimalField(default=0, max_digits=2, decimal_places=1) # 가게의 평점
     image = models.ImageField(upload_to='shops/%Y/%m/%d/', null=True, blank=True)
 
     def __str__(self):
         return '{}의 가게 {}'.format(self.owner.name, self.name)
+
+    def update_rating(self):
+        # 리뷰 등록 시 평점 저장
+        self.rating = self.review_set.aggregate(Avg('rating'))['rating__avg']
+        self.save(update_fields=['rating'])
+
 
 class Menu(models.Model):
     # 메뉴 모델
