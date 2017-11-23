@@ -102,6 +102,7 @@ class OrderList(generics.ListCreateAPIView):
 
     serializer_class = OrderSerializer
     permission_classes = (IsCustomer, )
+    filter_fields = ('is_finished',)
 
     def get_shop_instance(self):
         shop_id = self.kwargs.get('shop_id')
