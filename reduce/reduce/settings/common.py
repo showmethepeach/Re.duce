@@ -40,11 +40,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     # third party app
     'rest_framework',
     'rest_framework_docs',
     'django_filters',
     'corsheaders',
+    'rest_auth',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
     # local app
     'user',
     'api',
@@ -141,6 +147,7 @@ JWT_AUTH = {
     # 'JWT_AUTH_COOKIE': 'token',
 
 }
+REST_USE_JWT = True
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
 
@@ -176,6 +183,8 @@ USE_TZ = True
 # CORS (Cross-Origin Resource Sharing) headers to responses settings
 # CORS_ORIGIN_ALLOW_ALL = True
 # CORS_ALLOW_CREDENTIALS = True
+
+SITE_ID = 1
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/

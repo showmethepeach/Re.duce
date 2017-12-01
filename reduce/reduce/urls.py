@@ -17,6 +17,7 @@ from django.conf import settings
 from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.contrib import admin
+from user.views import FacebookLogin
 
 urlpatterns = [
     url(r'^user/', include('user.urls')),
@@ -27,6 +28,8 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^docs/', include('rest_framework_docs.urls')),
     url(r'^api-auth/', include('rest_framework.urls',namespace='rest_framework')),
+    url(r'^rest-auth/', include('rest_auth.urls')),
+    url(r'^rest-auth/facebook/$', FacebookLogin.as_view(), name='fb_login'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
