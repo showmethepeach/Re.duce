@@ -1,9 +1,16 @@
 from rest_framework import status, generics, mixins
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
+from rest_auth.registration.views import SocialLoginView
+from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
 from user.models import User
 from user.serializers import UserSerializer
 from user.permissions import IsAuthenticatedOrWriteOnly
+
+
+class FacebookLogin(SocialLoginView):
+    adapter_class = FacebookOAuth2Adapter
+
 
 class UserManager(mixins.CreateModelMixin, generics.RetrieveUpdateAPIView):
     # 유저 관리 View
