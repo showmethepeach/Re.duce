@@ -22,6 +22,7 @@ class MenuSerializer(serializers.ModelSerializer):
         }
 
 class ReviewSerializer(serializers.ModelSerializer):
+    customer = serializers.StringRelatedField(read_only=True)
 
     class Meta:
         model = Review
