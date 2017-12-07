@@ -172,13 +172,13 @@ AUTH_USER_MODEL = 'user.User'
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 # CORS (Cross-Origin Resource Sharing) headers to responses settings
 # CORS_ORIGIN_ALLOW_ALL = True
